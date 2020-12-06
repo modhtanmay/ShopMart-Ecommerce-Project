@@ -1,0 +1,52 @@
+<div class="container" style="margin-top: 10%;">
+
+    <h2>Login form</h2>
+
+    <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required
+                #username="ngModel" />
+            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && username.invalid">
+                Username is required!
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required
+                minlength="6" #password="ngModel" />
+            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && password.invalid">
+                <div *ngIf="password.errors.required">Password is required</div>
+                <div *ngIf="password.errors.minlength">
+                    Password must be at least 6 characters
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">
+                Login
+            </button>
+
+            <button class="float-md-right h4 btn btn-outline-dark" (click)="gotoregistration()"> New User ?
+                Register
+                Here</button>
+        </div>
+        <div class="form-group">
+            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
+                Login failed: {{ errorMessage }}
+            </div>
+        </div>
+    </form>
+
+    <div class="alert alert-success m-5" *ngIf="isLoggedIn">
+        You are Logged in as {{ roles }}.
+
+        <div class="alert alert-warning m-3" role="alert">
+            Keep Shopping
+            <hr>
+            <a [routerLink]="['/products']">See More Products</a>
+        </div>
+    </div>
+
+    <div style="margin-top: 50%;"></div>
+</div>
