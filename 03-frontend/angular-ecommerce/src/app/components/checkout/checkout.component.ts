@@ -23,11 +23,12 @@ export class CheckoutComponent implements OnInit {
     shippingAddressStates: State[] = [];
     billingAddressStates: State[] = [];
 
-    constructor(private shopmartService: ShopmartFormServiceService, private formBuilder: FormBuilder) { }
+    constructor(private cartService: CartService, private shopmartService: ShopmartFormServiceService, private formBuilder: FormBuilder) { }
 
 
     ngOnInit(): void {
 
+        this.reviewCartDetails();
         this.checkoutFormGroup = this.formBuilder.group({
             customer: this.formBuilder.group({
                 firstName: ['', [Validators.required, Validators.minLength(2)]],
@@ -75,6 +76,15 @@ export class CheckoutComponent implements OnInit {
 
         // populate Countries
         this.shopmartService.getCountries().subscribe(data => this.countries = data);
+    }
+
+    reviewCartDetails() {
+
+        // subscribe to cartService totalQuantity
+        this.cartService.totalQuantity.subscribe(totalQuantity => this.totalQuantity = totalQuantity);
+
+        // subscribe to cartService totalPrice
+        this.cartService.totalPrice.subscribe(totalPrice => this.totalPrice = totalPrice);
     }
 
     onSubmit() {

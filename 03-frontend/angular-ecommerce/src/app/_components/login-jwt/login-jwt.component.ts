@@ -15,6 +15,7 @@ export class LoginJwtComponent implements OnInit {
     isLoginFailed = false;
     errorMessage = '';
     roles: string[] = [];
+    username: string;
 
     constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private router: Router) { }
 
@@ -34,6 +35,7 @@ export class LoginJwtComponent implements OnInit {
                 this.isLoginFailed = false;
                 this.isLoggedIn = true;
                 this.roles = this.tokenStorage.getUser().roles;
+                this.username = this.tokenStorage.getUser().username;
                 this.reloadPage();
             },
             err => {
