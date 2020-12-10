@@ -3,8 +3,8 @@ import { Product } from './product';
 export class CartItem {
 
     id: string;
-    name: String;
-    imageUrl: String;
+    name: string;
+    imageUrl: string;
     unitPrice: number;
 
     quantity: number;
